@@ -1,0 +1,75 @@
+{
+   "BFO": "http://purl.obolibrary.org/obo/BFO_",
+   "NCIT": "http://purl.obolibrary.org/obo/NCIT_",
+   "SEPIO": "http://purl.obolibrary.org/obo/SEPIO_",
+   "SIO": "http://identifiers.org/sio/",
+   "core": "https://w3id.org/lmodel/uco-core/",
+   "dcid": "https://datacommons.org/browser/",
+   "linkml": "https://w3id.org/linkml/",
+   "lm_core": "https://w3id.org/lmodel/core/",
+   "marking": "https://w3id.org/lmodel/uco-marking/",
+   "owl": "http://www.w3.org/2002/07/owl#",
+   "schema_core": "https://w3id.org/lmodel/uco-core/schema/",
+   "sumo": "https://w3id.org/sumo/kb/",
+   "wikidata": "http://identifiers.org/wikidata/",
+   "Annotation": {
+      "@id": "core:Annotation"
+   },
+   "Assertion": {
+      "@id": "core:Assertion"
+   },
+   "AttributedName": {
+      "@id": "core:AttributedName"
+   },
+   "Bundle": {
+      "@id": "core:Bundle"
+   },
+   "Compilation": {
+      "@id": "core:Compilation"
+   },
+   "ConfidenceFacet": {
+      "@id": "core:ConfidenceFacet"
+   },
+   "ContextualCompilation": {
+      "@id": "core:ContextualCompilation"
+   },
+   "ControlledVocabulary": {
+      "@id": "core:ControlledVocabulary"
+   },
+   "EnclosingCompilation": {
+      "@id": "core:EnclosingCompilation"
+   },
+   "ExternalReference": {
+      "@id": "core:ExternalReference"
+   },
+   "Facet": {
+      "@id": "core:Facet"
+   },
+   "Grouping": {
+      "@id": "core:Grouping"
+   },
+   "IdentityAbstraction": {
+      "@id": "core:IdentityAbstraction"
+   },
+   "Item": {
+      "@id": "core:Item"
+   },
+   "MarkingDefinitionAbstraction": {
+      "@id": "core:MarkingDefinitionAbstraction"
+   },
+   "ModusOperandi": {
+      "@id": "core:ModusOperandi"
+   },
+   "Relationship": {
+      "@id": "core:Relationship"
+   },
+   "UcoInherentCharacterizationThing": {
+      "@id": "core:UcoInherentCharacterizationThing"
+   },
+   "UcoObject": {
+      "@id": "core:UcoObject"
+   },
+   "UcoThing": {
+      "@id": "core:UcoThing"
+   }
+}
