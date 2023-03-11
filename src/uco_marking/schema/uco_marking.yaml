@@ -127,6 +127,7 @@ classes:
     slot_usage:
       definitionType:
         subproperty_of: license
+        is_a: license
         multivalued: true
       license:
         maximum_cardinality: 1
@@ -198,6 +199,7 @@ classes:
       definitionType:
         multivalued: true
         subproperty_of: termsOfUse
+        is_a: termsOfUse
       termsOfUse:
         maximum_cardinality: 1
         minimum_cardinality: 1
