@@ -1,0 +1,208 @@
+---
+id: https://w3id.org/lmodel/uco-marking
+name: uco-marking
+title: UCO Marking
+description: >-
+  Data markings represent restrictions, permissions, and other guidance for how data can be used and shared.
+license: https://www.apache.org/licenses/LICENSE-2.0
+
+version: 1.1.0  # sync with primary git repo release tag
+
+## ------------
+##
+## PREFIXES
+## ------------
+# CURIE namespaces (prefixes/base URI's) mappings of prefixes used in the body of
+# the UCOLink Model specification are resolved using a specific precedence order,
+# for use in the generation of the UCOLink Model context.jsonld mappings to
+# namespaces. Any prefixes encountered in the UCOLink Model but not resolved by
+# the following precedence sources, are anonymously declared by linkml as
+# http://example.org/UNKNOWN/ rooted base URI's which should ideally be repaired
+# in one of the precedence lists.
+#
+# 1. The following 'prefixes:' delimited list has first precedence in resolution.
+
+prefixes:
+  lm_core: 'https://w3id.org/lmodel/core/'
+  linkml: 'https://w3id.org/linkml/'
+  SIO: 'http://identifiers.org/sio/'
+  sumo: 'https://w3id.org/sumo/kb/'
+
+  marking: 'https://w3id.org/lmodel/uco-marking/'
+  schema_uco_core: 'https://w3id.org/lmodel/uco-core/schema/'
+
+default_prefix: marking
+default_range: string
+
+## ------------
+## ENUMS
+## ------------
+enums: {}
+
+## ------------
+## SUBSETS
+## ------------
+subsets: {}
+
+## ------------
+## TYPES
+## ------------
+imports:
+  - linkml:types
+  - schema_uco_core:uco_core
+
+types: {}
+
+## ------------
+## SLOTS
+## ------------
+slots:
+
+  authorizedIdentities:
+    description: >-
+      Specifies the identities that are authorized to access the data to which the data marking is associated.  The list of authorized identities are represented as UUIDs.
+
+  contentSelectors:
+    description: >-
+      "Explicit specification of exactly which portions of a UCO object to apply MarkingDefinitions to.  Specific syntax for how to specify the UCO object portions is dependent on the particular syntactic serialization implementation (XML, JSON, etc.) of UCO and MUST be explicitly specified in a separate binding specification for that syntactic serialization implementation (e.g. a UCO XML Binding Specification)."
+
+  definition:
+    description: >-
+      Explicit specification of a data marking instance.
+    domain: MarkingModel
+    broad_mappings:
+      - NCIT:C42777  # definition
+      - wikidata:Q101072  # definition
+
+  definitionType:
+    description: >-
+      Specifies the Marking Model for a Marking Definition.
+
+  license:
+    description: >-
+      Specifies the identifier for the type of license
+    exact_mappings:
+      - lm_core:License
+
+  marking:
+    description: >-
+      Represents specific MarkingDefinitions to be applied to UCO data.
+    domain: MarkingDefinition
+    related_mappings:
+      - wikidata:Q3214320  # labeling
+    broad_mappings:
+      - wikidata:Q57248625  # mark
+
+  termsOfUse:
+    description: >-
+      Specifies the terms of use that apply to the structure for which the Marking is to be applied.
+    narrow_mappings:
+      - wikidata:Q7214489  # terms of service
+
+## ------------
+## CLASSES
+## ------------
+classes:
+
+  GranularMarking:
+    description: >-
+      A granular marking is a grouping of characteristics unique to specification of MarkingDefinitions (restrictions, permissions, and other guidance for how data can be used and shared) that apply to particular portions of a particular UCO object.
+    is_a: UcoInherentCharacterizationThing
+    slots:
+      - marking
+      - contentSelectors
+    slot_usage:
+      marking:
+        multivalued: true
+      contentSelectors:
+        multivalued: true
+
+  LicenseMarking:
+    description: >-
+      A MarkingDefinition is a grouping of characteristics unique to the expression of a specific data marking conveying restrictions, permissions, and other guidance for how marked data can be used and shared.
+    is_a: MarkingModel
+    slots:
+      - definitionType
+      - license
+    slot_usage:
+      definitionType:
+        subproperty_of: license
+        is_a: license
+        multivalued: true
+      license:
+        maximum_cardinality: 1
+        minimum_cardinality: 1
+        required: true
+
+  MarkingDefinition:
+    description: >-
+      A MarkingDefinition is a grouping of characteristics unique to the expression of a specific data marking conveying restrictions, permissions, and other guidance for how marked data can be used and shared.
+    is_a: MarkingDefinitionAbstraction
+    slots:
+      - definition
+      - definitionType
+    slot_usage:
+      definition:
+        multivalued: true
+      definitionType:
+        required: true
+        maximum_cardinality: 1
+        minimum_cardinality: 1
+
+  MarkingModel:
+    description: >-
+      A MarkingModel is a grouping of characteristics unique to the expression of a particular form of data MarkingDefinitions (restrictions, permissions, and other guidance for how data can be used and shared)
+    is_a: UcoInherentCharacterizationThing
+
+  ReleaseToMarking:
+    description: >-
+      A release-to marking is a grouping of characteristics unique to the expression of data MarkingDefinitions (restrictions, permissions, and other guidance for how data can be used and shared) to convey details of authorized persons and/or organizations to which to the associated content may be released. The existence of the Release-To marking restricts access to ONLY those identities explicitly listed, regardless of whether another data marking exists that allows sharing with other members of the community.
+    is_a: MarkingModel
+    slots:
+      - authorizedIdentities
+      - definitionType
+    slot_usage:
+      definitionType:
+        multivalued: true
+        # value_description: 'release-to'
+      authorizedIdentities:
+        required: true
+        minimum_cardinality: 1
+        multivalued: true
+
+  StatementMarking:
+    description: >-
+      A statement marking is a grouping of characteristics unique to the expression of data MarkingDefinitions (restrictions, permissions, and other guidance for how data can be used and shared) to convey details of a textual marking statement, (e.g., copyright) whose semantic meaning should apply to the associated content. Statement markings are generally not machine-readable. An example of this would be a simple marking to apply copyright information, such as 'Copyright 2014 Acme Inc.'.
+    is_a: MarkingModel
+    slots:
+      - definitionType
+      - statement
+    slot_usage:
+      definitionType:
+        multivalued: true
+        # value_description: 'statement'
+      statement:
+        description: >-
+          Specifies the statement to apply to the structure for which the Marking is to be applied.
+        maximum_cardinality: 1
+        minimum_cardinality: 1
+        required: true
+
+  TermsOfUseMarking:
+    description: >-
+      A terms of use marking is a grouping of characteristics unique to the expression of data MarkingDefinitions (restrictions, permissions, and other guidance for how data can be used and shared) to convey details of a textual statement specifying the Terms of Use (that is, the conditions under which the content may be shared, applied, or otherwise used) of the marked content. An example of this would be used to communicate a simple statement, such as 'Acme Inc. is not responsible for the content of this file'.
+    is_a: MarkingModel
+    slots:
+      - definitionType
+      - termsOfUse
+    slot_usage:
+      definitionType:
+        multivalued: true
+        subproperty_of: termsOfUse
+        is_a: termsOfUse
+      termsOfUse:
+        maximum_cardinality: 1
+        minimum_cardinality: 1
+        required: true
+
+...
